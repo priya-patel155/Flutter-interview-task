@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_interview_task/view/pages/see_all_movie.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../controller/constants/app_colors.dart';
@@ -76,13 +77,15 @@ class _MyHomePageState extends State<MyHomePage> {
           : ListView.builder(
               itemCount: finalMoviesWithCategory.length,
               itemBuilder: (context, index) {
-                return _buildMovieWidget(finalMoviesWithCategory[index]);
+                return _buildMovieWidget(
+                    finalMoviesWithCategory[index], context);
               }),
     );
   }
 }
 
-Widget _buildMovieWidget(CategoryMovieModel finalMoviesWithCategory) {
+Widget _buildMovieWidget(
+    CategoryMovieModel finalMoviesWithCategory, BuildContext context) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -95,9 +98,19 @@ Widget _buildMovieWidget(CategoryMovieModel finalMoviesWithCategory) {
               finalMoviesWithCategory.categoryName.toString(),
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
-            Text(
-              'See All',
-              style: TextStyle(fontSize: 10, color: Colors.white),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SeeAllMovie(
+                              finalMoviesWithCategory: finalMoviesWithCategory,
+                            )));
+              },
+              child: Text(
+                'See All',
+                style: TextStyle(fontSize: 10, color: Colors.white),
+              ),
             ),
           ],
         ),
